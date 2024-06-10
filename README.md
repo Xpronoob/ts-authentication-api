@@ -15,9 +15,21 @@ Built with:
 - [JWT](https://jwt.io/)
 - [Bcrypt](https://www.npmjs.com/package/bcrypt)
 
+## Configs
+
+Configurations & third party packages
+
+## Data
+
+References from databases
+
 ## Domain
 
+Business Rules
+
 ## Infrastructure
+
+Implementations
 
 ## Presentation
 
