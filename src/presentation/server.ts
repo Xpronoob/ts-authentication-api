@@ -17,6 +17,11 @@ export class Server {
   }
 
   async start () {
+    // Midlewares
+    this.app.use(express.json())
+    // this.app.use(express.urlencoded({ extended: true })) // Accept x-www-form-urlencoded
+
+    // Routes
     this.app.use(this.routes)
 
     this.app.listen(this.port, () => {
