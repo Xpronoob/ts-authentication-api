@@ -26,6 +26,8 @@ References from databases
 ## Domain
 
 Business Rules
+Datasources: Business Rules to get data
+Repositories: Communication with datasources
 
 ## Infrastructure
 
@@ -38,17 +40,21 @@ Express server with options: port:number
 ## Folder structure
 
     ts-authentication-api/
+    ├── build/
     ├── src/
-    │   ├── application/
-    │   │
+    │   ├── config/
     │   ├── domain/
-    │   │
+    │   │   │── datasources
+    │   │   │── dtos
+    │   │   │── entities
+    │   │   │── errors
+    │   │   └── repositories
     │   ├── infrastructure/
-    │   │
     │   ├── presentation/
+    │   │   │── auth
     │   │   └── server.ts
-    │   │
     │   └── app.ts
+    ├── http.http
     ├── package.json
     └── tsconfig.json
 
