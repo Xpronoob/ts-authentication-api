@@ -31,7 +31,7 @@ Repositories: Communication with datasources
 
 ## Infrastructure
 
-Implementations
+Implementations o datasources  and repositories from domain
 
 ## Presentation
 
