@@ -14,6 +14,7 @@ Built with:
 - [Prisma](https://www.prisma.io/)
 - [JWT](https://jwt.io/)
 - [Bcrypt](https://www.npmjs.com/package/bcrypt)
+- [Docker](https://www.docker.com/)
 
 ## Configs
 
@@ -86,3 +87,9 @@ Express server with options: port:number
 - [ ] Delete User
 
 ## License
+
+## Instalation
+
+Run docker
+
+    docker compose up -d
