@@ -1,6 +1,6 @@
-import { AppRoutes } from './presentation/routes'
+// import { AppRoutes } from './presentation/routes'
 import { envs } from './config'
-import { Server } from './presentation/server'
+import { Server, AppRoutes } from './presentation/index'
 import { MongoDatabase } from './data/mongodb'
 
 (() => {

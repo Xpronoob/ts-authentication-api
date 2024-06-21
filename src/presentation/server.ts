@@ -16,8 +16,8 @@ export class Server {
     this.routes = routes
   }
 
-  async start () {
-    // Midlewares
+  async start (): Promise<void> {
+    // Middlewares
     this.app.use(express.json())
     // this.app.use(express.urlencoded({ extended: true })) // Accept x-www-form-urlencoded
 
@@ -25,7 +25,7 @@ export class Server {
     this.app.use(this.routes)
 
     this.app.listen(this.port, () => {
-      console.log(`Server running on port ${this.port}`)
+      console.log(`Server running on http://localhost:${this.port}`)
     })
   }
 }
