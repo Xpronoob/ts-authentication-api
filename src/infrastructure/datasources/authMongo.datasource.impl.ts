@@ -1,23 +1,24 @@
 import { UserModel } from '../../data/mongodb'
 import { AuthDatasource, CustomError, RegisterUserDto, UserEntity } from '../../domain'
+import { BcryptAdapter } from '../../config/bcrypt.adapter';
 
 export class AuthMongoDatasourceImpl implements AuthDatasource {
   async register (registerUserDto: RegisterUserDto): Promise<UserEntity> {
     const { name, email, password } = registerUserDto
 
     try {
-      console.log('debug')
       // 1. Check if email already exists
       const exists = await UserModel.findOne({ email })
       if (exists != null) throw CustomError.badRequest('User already exists')
 
+      // 2. Hash the password
       const user = await UserModel.create({
         name,
         email,
-        password
+        password: BcryptAdapter.hash(password)
       })
 
-      // 2. Hash the password
+      await user.save()
 
       // 3. Map response
 
@@ -25,7 +26,7 @@ export class AuthMongoDatasourceImpl implements AuthDatasource {
         user.id,
         name,
         email,
-        password,
+        user.password,
         user.roles
       )
     } catch (error) {
