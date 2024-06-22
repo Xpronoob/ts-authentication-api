@@ -16,11 +16,11 @@ export class JwtAdapter {
     })
   }
 
-  static async validateToken (token: string) {
+  static async validateToken<T> (token: string): Promise<T | null> {
     return await new Promise((resolve) => {
       jwt.verify(token, 'SEED', (err, decoded) => {
         if (err != null) return resolve(null)
-        resolve(decoded)
+        resolve(decoded as T)
       })
     })
   }
