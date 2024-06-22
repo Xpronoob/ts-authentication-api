@@ -18,3 +18,8 @@ Content-Type: application/json
   "email": "user@user.com",
   "password": "password"
 }
+
+###
+
+GET http://localhost:3030/api/auth/
+Content-Type: application/json
