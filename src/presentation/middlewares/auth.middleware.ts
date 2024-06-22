@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { JwtAdapter } from '../../config'
 import { error } from 'console'
+import { UserModel } from '../../data/mongodb'
 
 export class AuthMiddleware {
   static validateJWT = async (req: Request, res: Response, next: NextFunction) => {
@@ -15,7 +16,10 @@ export class AuthMiddleware {
       const payload = await JwtAdapter.validateToken<{ id: string }>(token)
       if (payload == null) return res.status(401).json({ error: 'Invalid token' })
 
-      req.body.payload = payload
+      const user = await UserModel.findById(payload.id)
+      if (user == null) return res.status(401).json({ error: 'Invalid token - user not found' })
+
+      req.body.user = user
 
       next()
     } catch (error) {
