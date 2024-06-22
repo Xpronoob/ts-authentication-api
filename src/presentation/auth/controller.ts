@@ -43,7 +43,7 @@ export class AuthController {
       .then(users => {
         res.json({
           users,
-          token: req.body.token
+          token: req.body.payload
         })
       })
       .catch(() => res.status(500).json({ error: 'Internal Server Error' }))
