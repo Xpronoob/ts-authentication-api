@@ -64,5 +64,8 @@ const { url, dbName } = dbInstance.getMongoInfo()
 export const envs = {
   PORT: getPort(),
   MONGO_URL: url,
-  MONGO_DB_NAME: dbName
+  MONGO_DB_NAME: dbName,
+
+  // todo: require or throw
+  JWT_SEED: process.env.JWT_SEED || ''
 }
