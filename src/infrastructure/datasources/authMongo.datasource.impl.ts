@@ -2,6 +2,7 @@ import { UserModel } from '../../data/mongodb'
 import { AuthDatasource, CustomError, RegisterUserDto, UserEntity } from '../../domain'
 import { BcryptAdapter } from '../../config/bcrypt.adapter'
 import { UserMapper } from '../mappers/user.mapper'
+import { LoginUserDto } from '../../domain/dtos/auth/login-user.dto'
 
 type HashFunction = (password: string) => string
 type CompareFunction = (password: string, hashed: string) => boolean
@@ -32,6 +33,28 @@ export class AuthMongoDatasourceImpl implements AuthDatasource {
       // 3. Map response
 
       return UserMapper.userEntityFromObject(user)
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
+  async login (loginUserDto: LoginUserDto): Promise<UserEntity> {
+    const { email, password } = loginUserDto
+
+    try {
+      // 1. Check if email already exists
+      const userExist = await UserModel.findOne({ email })
+      if (userExist == null) throw CustomError.badRequest('User not found')
+
+      // 2. Compare passwords
+      const isValid = this.comparePassword(password, userExist.password)
+      if (!isValid) throw CustomError.badRequest('User not found')
+
+      // 3. Map response
+      return UserMapper.userEntityFromObject(userExist)
     } catch (error) {
       if (error instanceof CustomError) {
         throw error

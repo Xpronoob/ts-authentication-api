@@ -9,7 +9,9 @@ export class LoginUserDto {
   static create (object: { [key: string]: any }): [string?, LoginUserDto?] {
     const { email, password } = object
 
-    if (!email) return ['Missing email']
+    const normalizedEmail = email.toLowerCase()
+
+    if (!normalizedEmail) return ['Missing email']
     if (!Validators.email.test(email)) return ['Invalid email']
 
     if (!password) return ['Missing password']
@@ -18,7 +20,7 @@ export class LoginUserDto {
     return [
       undefined,
       new LoginUserDto(
-        email, password
+        normalizedEmail, password
       )
     ]
   }

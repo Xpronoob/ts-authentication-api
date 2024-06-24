@@ -25,10 +25,10 @@ export class LoginUserImp implements LoginUserUseCase {
   ) {}
 
   async execute (loginUserDto: LoginUserDto): Promise<UserToken> {
-    // todo: create user
+    // Login user with repository
     const user = await this.authRepository.login(loginUserDto)
 
-    // todo: token
+    // SignToken
     const token = await this.signToken({ id: user.id }, '2h')
     if (!token) throw CustomError.internalServer('Error generating token')
 

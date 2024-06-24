@@ -2,6 +2,8 @@ import { Request, Response } from 'express'
 import { AuthRepository, CustomError, RegisterUserDto, RegisterUserImp } from '../../domain'
 import { JwtAdapter } from '../../config/jwt.adapter'
 import { UserModel } from '../../data/mongodb'
+import { LoginUserDto } from '../../domain/dtos/auth/login-user.dto'
+import { LoginUserImp } from '../../domain/use-cases/auth/login-user.use-case'
 
 export class AuthController {
   // DI
@@ -29,9 +31,13 @@ export class AuthController {
   }
 
   loginUser = (req: Request, res: Response) => {
-    res.json({
-      message: 'LoginController'
-    })
+    const [error, loginUserDto] = LoginUserDto.create(req.body)
+    if (error) return res.status(400).json({ error })
+
+    new LoginUserImp(this.authRepository)
+      .execute(loginUserDto!)
+      .then(data => res.json(data))
+      .catch(error => this.handleError(error, res))
   }
 
   getUsers = (req: Request, res: Response) => {
