@@ -25,7 +25,7 @@ export class AuthController {
     if (error) return res.status(400).json({ error })
 
     new RegisterUserImp(this.authRepository)
-      .execute(registerUserDto!)
+      .execute(registerUserDto!, res)
       .then(data => res.json(data))
       .catch(error => this.handleError(error, res))
   }
@@ -35,16 +35,16 @@ export class AuthController {
     if (error) return res.status(400).json({ error })
 
     new LoginUserImp(this.authRepository)
-      .execute(loginUserDto!)
+      .execute(loginUserDto!, res)
       .then(data => res.json(data))
       .catch(error => this.handleError(error, res))
   }
 
-  getUsers = (req: Request, res: Response) => {
+  getProfile = (req: Request, res: Response) => {
     UserModel.find()
       .then(users => {
         res.json({
-          // users,
+          users,
           user: req.body.user
         })
       })
