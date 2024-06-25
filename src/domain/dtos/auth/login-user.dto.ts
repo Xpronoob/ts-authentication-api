@@ -1,27 +1,26 @@
-import { Validators } from '../../../config'
+import { Validators } from '../../../config/validators'
 
-export class RegisterUserDto {
-  private constructor (
-    public name: string,
+export class LoginUserDto {
+  constructor (
     public email: string,
     public password: string
   ) {}
 
-  static create (object: { [key: string]: any }): [string?, RegisterUserDto?] {
-    const { name, email, password } = object
+  static create (object: { [key: string]: any }): [string?, LoginUserDto?] {
+    const { email, password } = object
 
     const normalizedEmail = email.toLowerCase()
 
-    if (!name) return ['Missing name']
     if (!normalizedEmail) return ['Missing email']
     if (!Validators.email.test(email)) return ['Invalid email']
+
     if (!password) return ['Missing password']
     if (password.length < 6) return ['Password must be at least 6 characters long']
 
     return [
       undefined,
-      new RegisterUserDto(
-        name, normalizedEmail, password
+      new LoginUserDto(
+        normalizedEmail, password
       )
     ]
   }
