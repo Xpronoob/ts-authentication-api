@@ -2,7 +2,7 @@
 
 ## Description
 
-User system and JWT Authentication
+User system and JWT Authentication with clean architecture
 
 ## Stack / Framework used
 
@@ -11,14 +11,15 @@ Built with:
 - [Typescript](https://www.typescriptlang.org/)
 - [Node.js](https://nodejs.org/en/)
 - [Express.js](https://expressjs.com/)
-- [Prisma](https://www.prisma.io/)
+<!-- - [Prisma](https://www.prisma.io/) -->
+- [Mongo](https://mongodb.com/)
 - [JWT](https://jwt.io/)
 - [Bcrypt](https://www.npmjs.com/package/bcrypt)
 - [Docker](https://www.docker.com/)
 
 ## Configs
 
-Configurations & third party packages
+Configurations, Adapters & Third party packages
 
 ## Data
 
@@ -26,18 +27,15 @@ References from databases
 
 ## Domain
 
-Business Rules
-Datasources: Business Rules to get data
-Repositories: Communication with datasources
+Enterprise Business Rules
 
 ## Infrastructure
 
-Datasource implementation: Business Rules to get data
-Repository implementation: Communication with datasources
+Application Business Rules
 
 ## Presentation
 
-Express server with options: port:number
+Frameworks & Drivers
 
 ## Folder structure
 
@@ -45,26 +43,33 @@ Express server with options: port:number
     ├── build/
     ├── src/
     │   ├── config/
+    │   ├── data/
     │   ├── domain/
     │   │   │── datasources
     │   │   │── dtos
     │   │   │── entities
     │   │   │── errors
-    │   │   └── repositories
+    │   │   │── repositories
+    │   │   └── use-cases
     │   ├── infrastructure/
+    │   │   │── datasources
+    │   │   │── mappers
+    │   │   └── repositories
     │   ├── presentation/
     │   │   │── auth
+    │   │   │── middlewares
     │   │   └── server.ts
     │   └── app.ts
     ├── http.http
+    ├── docker-compose.yml
     ├── package.json
     └── tsconfig.json
 
 ## Implementations
 
-- [ ] Implement JWT Token
+- [x] Implement JWT Token
 - [ ] Implement Refresh Token
-- [ ] Implement Prisma ORM
+<!-- - [ ] Implement Prisma ORM -->
 - [ ] Implement Testing
 - [ ] Implement Swagger
 - [ ] Implement Docker
@@ -72,8 +77,8 @@ Express server with options: port:number
 
 ## Todo Authentication
 
-- [ ] Register
-- [ ] Login
+- [x] Register
+- [x] Login
 - [ ] Logout
 - [ ] Profile
 - [ ] EditProfile
