@@ -4,6 +4,7 @@ import { JwtAdapter } from '../../config/jwt.adapter'
 import { UserModel } from '../../data/mongodb'
 import { LoginUserDto } from '../../domain/dtos/auth/login-user.dto'
 import { LoginUserImp } from '../../domain/use-cases/auth/login-user.use-case'
+import { ProfileUserDto } from '../../domain/dtos/auth/profile-user.dto'
 
 export class AuthController {
   // DI
@@ -41,13 +42,10 @@ export class AuthController {
   }
 
   getProfile = (req: Request, res: Response) => {
-    UserModel.find()
-      .then(users => {
-        res.json({
-          users,
-          user: req.body.user
-        })
-      })
-      .catch(() => res.status(500).json({ error: 'Internal Server Error' }))
+    const [error, profileUserDto] = ProfileUserDto.create(req.body.user)
+    if (error) return res.status(400).json({ error })
+    res.json({
+      user: profileUserDto
+    })
   }
 }
