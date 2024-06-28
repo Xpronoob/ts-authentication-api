@@ -1,4 +1,6 @@
 import express, { Router } from 'express'
+import morgan from 'morgan'
+import cookieParser from 'cookie-parser'
 
 interface Options {
   port?: number
@@ -19,6 +21,8 @@ export class Server {
   async start (): Promise<void> {
     // Middlewares
     this.app.use(express.json())
+    this.app.use(morgan('dev'))
+    this.app.use(cookieParser())
     // this.app.use(express.urlencoded({ extended: true })) // Accept x-www-form-urlencoded
 
     // Routes
