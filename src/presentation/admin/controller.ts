@@ -1,12 +1,9 @@
 import { Request, Response } from 'express'
-import { AdminRepository, CustomError, RegisterUserImp } from '../../domain'
-import { JwtAdapter } from '../../config/jwt.adapter'
-import { UserModel } from '../../data/mongodb'
-import { LoginUserDto } from '../../domain/dtos/auth/login-user.dto'
-import { LoginUserImp } from '../../domain/use-cases/auth/login-user.use-case'
-import { ProfileUserDto } from '../../domain/dtos/auth/profile-user.dto'
+import { AdminRepository, CustomError } from '../../domain'
 import { CreateUserDto } from '../../domain/dtos/admin/create-user.dto'
 import { CreateUserImp } from '../../domain/use-cases/admin/create-user.use-case'
+import { FindByUserDto } from '../../domain/dtos/admin/findBy-user.dto'
+import { FindByUserImp } from '../../domain/use-cases/admin/findBy-user.use-case'
 
 export class AdminController {
   // DI
@@ -29,6 +26,17 @@ export class AdminController {
 
     new CreateUserImp(this.adminRepository)
       .execute(createUserDto!, res)
+      .then(data => res.json(data))
+      .catch(error => this.handleError(error, res))
+  }
+
+  findBy = (req: Request, res: Response) => {
+    if (!req.body.name && !req.body.email) return res.status(400).json({ error: 'Missing search' })
+    const [error, findUserDto] = FindByUserDto.create(req.body)
+    if (error) return res.status(400).json({ error })
+
+    new FindByUserImp(this.adminRepository)
+      .execute(findUserDto!, res)
       .then(data => res.json(data))
       .catch(error => this.handleError(error, res))
   }
