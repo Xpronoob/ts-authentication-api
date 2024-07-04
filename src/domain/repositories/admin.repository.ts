@@ -6,7 +6,7 @@ import { PublicUserEntity } from '../entities/public-user.entity'
 export abstract class AdminRepository {
   // todo:
   abstract create (createUserDto: CreateUserDto): Promise<UserEntity>
-  // abstract findAll (): Promise<UserEntity[]>
+  abstract findAll (): Promise<PublicUserEntity[]>
   // abstract findById (id: string): Promise<UserEntity>
   // abstract findByEmail (email: string): Promise<UserEntity>
   // abstract findByName (name: string): Promise<UserEntity>

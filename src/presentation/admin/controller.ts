@@ -4,6 +4,7 @@ import { CreateUserDto } from '../../domain/dtos/admin/create-user.dto'
 import { CreateUserImp } from '../../domain/use-cases/admin/create-user.use-case'
 import { FindByUserDto } from '../../domain/dtos/admin/findBy-user.dto'
 import { FindByUserImp } from '../../domain/use-cases/admin/findBy-user.use-case'
+import { FindAllUserImp } from '../../domain/use-cases/admin/findAll-user.use-case'
 
 export class AdminController {
   // DI
@@ -20,7 +21,7 @@ export class AdminController {
     return res.status(500).json({ error: 'Internal Server Error' })
   }
 
-  createUser = (req: Request, res: Response) => {
+  create = (req: Request, res: Response) => {
     const [error, createUserDto] = CreateUserDto.create(req.body)
     if (error) return res.status(400).json({ error })
 
@@ -37,6 +38,13 @@ export class AdminController {
 
     new FindByUserImp(this.adminRepository)
       .execute(findUserDto!, res)
+      .then(data => res.json(data))
+      .catch(error => this.handleError(error, res))
+  }
+
+  findAll = (req: Request, res: Response) => {
+    new FindAllUserImp(this.adminRepository)
+      .execute(res)
       .then(data => res.json(data))
       .catch(error => this.handleError(error, res))
   }

@@ -14,4 +14,8 @@ export class AdminRepositoryImpl implements AdminRepository {
   async findBy (findByUserDto: FindByUserDto): Promise<PublicUserEntity[]> {
     return await this.adminDatasource.findBy(findByUserDto)
   }
+
+  async findAll (): Promise<PublicUserEntity[]> {
+    return await this.adminDatasource.findAll()
+  }
 }

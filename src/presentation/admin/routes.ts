@@ -15,8 +15,8 @@ export class AdminRoutes {
 
     const controller = new AdminController(adminRepository)
 
-    router.post('/createUser', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.createUser)
-    // router.get('/findAllUsers', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.findAllUsers)
+    router.post('/createUser', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.create)
+    router.get('/findAll', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.findAll)
     router.post('/findBy', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.findBy)
     // router.get('/findUserByEmail/:email', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.findByEmail)
     // router.post('/findUserByName', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.findByName)
