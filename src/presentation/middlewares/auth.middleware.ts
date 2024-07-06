@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
 import { JwtAdapter } from '../../config'
-import { error } from 'console'
 import { UserModel } from '../../data/mongodb'
 
 // todo: get token from cookies

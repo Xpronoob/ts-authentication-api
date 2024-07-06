@@ -67,7 +67,14 @@ export class AdminMongoDatasourceImpl implements AdminDatasource {
   }
 
   async findAll (): Promise<PublicUserEntity[]> {
-    const users = await UserModel.find().exec()
-    return PublicUserMapper.userEntityArrayFromObjectArray(users)
+    try {
+      const users = await UserModel.find().exec()
+      return PublicUserMapper.userEntityArrayFromObjectArray(users)
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
   }
 }
