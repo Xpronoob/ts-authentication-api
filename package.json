@@ -9,6 +9,7 @@
     "start": "pnpm run build && node build/app.js",
     "esm": "node --experimental-specifier-resolution=node --loader ts-node/esm ./src/app.ts",
     "dev": "nodemon --watch src --ext ts --exec \"node --loader ts-node/esm --experimental-specifier-resolution=node -r tsconfig-paths/register src/app.ts\"",
+    "lint": "pnpm eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
