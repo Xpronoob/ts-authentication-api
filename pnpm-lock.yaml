@@ -36,6 +36,9 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
+      '@eslint/eslintrc':
+        specifier: ^3.1.0
+        version: 3.1.0
       '@eslint/js':
         specifier: ^9.6.0
         version: 9.6.0
@@ -66,6 +69,12 @@ importers:
       '@types/node':
         specifier: ^20.14.8
         version: 20.14.8
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^7.15.0
+        version: 7.15.0(@typescript-eslint/parser@7.15.0(eslint@9.6.0)(typescript@5.5.2))(eslint@9.6.0)(typescript@5.5.2)
+      '@typescript-eslint/parser':
+        specifier: ^7.15.0
+        version: 7.15.0(eslint@9.6.0)(typescript@5.5.2)
       eslint:
         specifier: ^9.6.0
         version: 9.6.0
@@ -75,6 +84,9 @@ importers:
       nodemon:
         specifier: ^3.1.4
         version: 3.1.4
+      prettier:
+        specifier: ^3.3.2
+        version: 3.3.2
       prisma:
         specifier: ^5.15.1
         version: 5.15.1
@@ -1159,6 +1171,11 @@ packages:
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
+
+  prettier@3.3.2:
+    resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
+    engines: {node: '>=14'}
+    hasBin: true
 
   prisma@5.15.1:
     resolution: {integrity: sha512-pYsUVpTlYvZ6mWvZKDv9rKdUa7tlfSUJY1CVtgb8Had1pHbIm9fr1MBASccr5XnSuCUrjnvKhWNwgSYy6aCajA==}
@@ -2607,6 +2624,8 @@ snapshots:
   picomatch@2.3.1: {}
 
   prelude-ls@1.2.1: {}
+
+  prettier@3.3.2: {}
 
   prisma@5.15.1:
     dependencies:

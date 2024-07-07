@@ -38,6 +38,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.6.0",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.7",
@@ -48,9 +49,12 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.14.8",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
     "eslint": "^9.6.0",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.4",
+    "prettier": "^3.3.2",
     "prisma": "^5.15.1",
     "rimraf": "^5.0.7",
     "ts-node": "^10.9.2",
