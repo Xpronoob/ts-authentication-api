@@ -7,7 +7,7 @@ import { AdminMongoDatasourceImpl } from '../../infrastructure/datasources/admin
 import { AdminRepositoryImpl } from '../../infrastructure/repositories/admin.repository.impl'
 
 export class AdminRoutes {
-  static get routes (): Router {
+  static get routes(): Router {
     const router = Router()
 
     const datasource = new AdminMongoDatasourceImpl()
@@ -15,13 +15,29 @@ export class AdminRoutes {
 
     const controller = new AdminController(adminRepository)
 
-    router.post('/createUser', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.create)
-    router.get('/findAll', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.findAll)
-    router.post('/findBy', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.findBy)
+    router.post(
+      '/createUser',
+      [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles],
+      controller.create,
+    )
+    router.get(
+      '/findAll',
+      [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles],
+      controller.findAll,
+    )
+    router.post(
+      '/findBy',
+      [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles],
+      controller.findBy,
+    )
     // router.get('/findUserByEmail/:email', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.findByEmail)
     // router.post('/findUserByName', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.findByName)
-    // router.post('/updateUser', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.updateUser)
-    // router.post('/deleteUser', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.deleteUser)
+    // router.post('/updateUser', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.update)
+    router.post(
+      '/deleteUser',
+      [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles],
+      controller.delete,
+    )
 
     return router
   }

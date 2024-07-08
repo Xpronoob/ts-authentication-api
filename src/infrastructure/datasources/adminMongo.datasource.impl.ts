@@ -6,17 +6,18 @@ import { AdminDatasource } from '../../domain/datasources/admin.datasource'
 import { FindByUserDto } from '../../domain/dtos/admin/findBy-user.dto'
 import { PublicUserMapper } from '../mappers/public-user.mapper'
 import { PublicUserEntity } from '../../domain/entities/public-user.entity'
+import { DeleteUserDto } from '../../domain/dtos/admin/delete-user.dto'
 
 type HashFunction = (password: string) => string
 type CompareFunction = (password: string, hashed: string) => boolean
 
 export class AdminMongoDatasourceImpl implements AdminDatasource {
-  constructor (
+  constructor(
     private readonly hashPassword: HashFunction = BcryptAdapter.hash,
-    private readonly comparePassword: CompareFunction = BcryptAdapter.compare
+    private readonly comparePassword: CompareFunction = BcryptAdapter.compare,
   ) {}
 
-  async create (createUserDto: CreateUserDto): Promise<UserEntity> {
+  async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     // 1. Validate request
     const { name, email, password, roles, img } = createUserDto
 
@@ -27,7 +28,7 @@ export class AdminMongoDatasourceImpl implements AdminDatasource {
         email,
         password: this.hashPassword(password),
         img,
-        roles
+        roles,
       })
 
       await user.save()
@@ -42,7 +43,7 @@ export class AdminMongoDatasourceImpl implements AdminDatasource {
     }
   }
 
-  async findBy (findByUserDto: FindByUserDto): Promise<PublicUserEntity[]> {
+  async findBy(findByUserDto: FindByUserDto): Promise<PublicUserEntity[]> {
     // 1. Search criteria
     const { name, email, roles } = findByUserDto
 
@@ -66,11 +67,34 @@ export class AdminMongoDatasourceImpl implements AdminDatasource {
     }
   }
 
-  async findAll (): Promise<PublicUserEntity[]> {
+  async findAll(): Promise<PublicUserEntity[]> {
     try {
       const users = await UserModel.find().exec()
       return PublicUserMapper.userEntityArrayFromObjectArray(users)
     } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
+  async delete(deleteUserDto: DeleteUserDto): Promise<boolean> {
+    try {
+      const { id, email } = deleteUserDto
+      const query: { [key: string]: any } = {}
+      if (id) query._id = id
+      if (email) query.email = email
+
+      const deleteResponse = await UserModel.deleteOne(query).exec()
+
+      if (deleteResponse.deletedCount === 0) {
+        return false
+      }
+
+      return true
+    } catch (error) {
+      console.error('Error deleting user:', error)
       if (error instanceof CustomError) {
         throw error
       }
