@@ -28,7 +28,7 @@ export class AdminController {
     if (error) return res.status(400).json({ error })
 
     new CreateUserImp(this.adminRepository)
-      .execute(createUserDto!, res)
+      .execute(createUserDto!)
       .then(data => res.json(data))
       .catch(error => this.handleError(error, res))
   }
@@ -39,14 +39,14 @@ export class AdminController {
     if (error) return res.status(400).json({ error })
 
     new FindByUserImp(this.adminRepository)
-      .execute(findUserDto!, res)
+      .execute(findUserDto!)
       .then(data => res.json(data))
       .catch(error => this.handleError(error, res))
   }
 
   findAll = (req: Request, res: Response) => {
     new FindAllUserImp(this.adminRepository)
-      .execute(res)
+      .execute()
       .then(data => res.json(data))
       .catch(error => this.handleError(error, res))
   }

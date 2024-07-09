@@ -1,8 +1,5 @@
 import { UpdateUserDto } from '../../dtos/admin/update-user.dto'
 import { AdminRepository } from '../../repositories/admin.repository'
-import { CustomError } from '../../errors/custom.error'
-import { Response } from 'express'
-import { UserModel } from '../../../data/mongodb/models/user.model'
 
 interface NewUser {
   user: {

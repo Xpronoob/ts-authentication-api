@@ -1,5 +1,4 @@
 import { AdminRepository } from '../../repositories/admin.repository'
-import { CustomError } from '../../errors/custom.error'
 import { Response } from 'express'
 import { PublicUserEntity } from '../../entities/public-user.entity'
 
@@ -8,11 +7,9 @@ interface FindAllUserUseCase {
 }
 
 export class FindAllUserImp implements FindAllUserUseCase {
-  constructor (
-    private readonly adminRepository: AdminRepository
-  ) {}
+  constructor(private readonly adminRepository: AdminRepository) {}
 
-  async execute (res: Response): Promise<PublicUserEntity[]> {
+  async execute(): Promise<PublicUserEntity[]> {
     const users = await this.adminRepository.findAll()
 
     return users

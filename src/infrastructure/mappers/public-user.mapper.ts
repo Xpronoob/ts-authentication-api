@@ -1,9 +1,8 @@
-import { CustomError } from '../../domain/errors/custom.error'
 import { PublicUserEntity } from '../../domain/entities/public-user.entity'
 
 export class PublicUserMapper {
-  static userEntityFromObject (object: any): PublicUserEntity {
-    const { id, _id, name, email, img, roles } = object
+  static userEntityFromObject(object: any): PublicUserEntity {
+    const { name, email, img, roles } = object
 
     return new PublicUserEntity(
       // _id || '',
@@ -12,11 +11,11 @@ export class PublicUserMapper {
       email || '',
       // '', // password
       roles || [],
-      img || ''
+      img || '',
     )
   }
 
-  static userEntityArrayFromObjectArray (objects: any[]): PublicUserEntity[] {
+  static userEntityArrayFromObjectArray(objects: any[]): PublicUserEntity[] {
     return objects.map(obj => this.userEntityFromObject(obj))
   }
 }

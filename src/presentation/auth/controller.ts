@@ -1,16 +1,12 @@
 import { Request, Response } from 'express'
 import { AuthRepository, CustomError, RegisterUserDto, RegisterUserImp } from '../../domain'
-import { JwtAdapter } from '../../config/jwt.adapter'
-import { UserModel } from '../../data/mongodb'
 import { LoginUserDto } from '../../domain/dtos/auth/login-user.dto'
 import { LoginUserImp } from '../../domain/use-cases/auth/login-user.use-case'
 import { ProfileUserDto } from '../../domain/dtos/auth/profile-user.dto'
 
 export class AuthController {
   // DI
-  constructor (
-    private readonly authRepository: AuthRepository
-  ) {}
+  constructor(private readonly authRepository: AuthRepository) {}
 
   private readonly handleError = (error: unknown, res: Response) => {
     if (error instanceof CustomError) {
@@ -45,7 +41,7 @@ export class AuthController {
     const [error, profileUserDto] = ProfileUserDto.create(req.body.user)
     if (error) return res.status(400).json({ error })
     res.json({
-      user: profileUserDto
+      user: profileUserDto,
     })
   }
 }
