@@ -7,6 +7,8 @@ import { FindByUserImp } from '../../domain/use-cases/admin/findBy-user.use-case
 import { FindAllUserImp } from '../../domain/use-cases/admin/findAll-user.use-case'
 import { DeleteUserImp } from '../../domain/use-cases/admin/delete-user.use-case'
 import { DeleteUserDto } from '../../domain/dtos/admin/delete-user.dto'
+import { UpdateUserDto } from '../../domain/dtos/admin/update-user.dto'
+import { UpdateUserImp } from '../../domain/use-cases/admin/update-user.use-case'
 
 export class AdminController {
   // DI
@@ -32,8 +34,7 @@ export class AdminController {
   }
 
   findBy = (req: Request, res: Response) => {
-    if (!req.body.name && !req.body.email)
-      return res.status(400).json({ error: 'Missing search' })
+    if (!req.body.name && !req.body.email) return res.status(400).json({ error: 'Missing search' })
     const [error, findUserDto] = FindByUserDto.create(req.body)
     if (error) return res.status(400).json({ error })
 
@@ -63,6 +64,16 @@ export class AdminController {
           res.status(404).json({ message: 'User not found' })
         }
       })
+      .catch(error => this.handleError(error, res))
+  }
+
+  update = (req: Request, res: Response) => {
+    const [error, updateUserDto] = UpdateUserDto.create(req.body)
+    if (error) return res.status(400).json({ error })
+
+    new UpdateUserImp(this.adminRepository)
+      .execute(updateUserDto!)
+      .then(data => res.json(data))
       .catch(error => this.handleError(error, res))
   }
 }

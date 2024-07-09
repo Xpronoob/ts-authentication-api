@@ -3,6 +3,7 @@ import { CreateUserDto } from '../dtos/admin/create-user.dto'
 import { FindByUserDto } from '../dtos/admin/findBy-user.dto'
 import { PublicUserEntity } from '../entities/public-user.entity'
 import { DeleteUserDto } from '../dtos/admin/delete-user.dto'
+import { UpdateUserDto } from '../dtos/admin/update-user.dto'
 
 export abstract class AdminRepository {
   // todo:
@@ -12,6 +13,6 @@ export abstract class AdminRepository {
   // abstract findByEmail (email: string): Promise<UserEntity>
   // abstract findByName (name: string): Promise<UserEntity>
   abstract findBy(findByUserDto: FindByUserDto): Promise<PublicUserEntity[]>
-  // abstract update (): Promise<UserEntity>
+  abstract update(updateUserDto: UpdateUserDto): Promise<PublicUserEntity>
   abstract delete(deleteUserDto: DeleteUserDto): Promise<boolean>
 }

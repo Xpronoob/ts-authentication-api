@@ -1,5 +1,5 @@
 import { UserModel } from '../../data/mongodb'
-import { CustomError, CreateUserDto, UserEntity } from '../../domain'
+import { CustomError, CreateUserDto, UserEntity, UpdateUserDto } from '../../domain'
 import { BcryptAdapter } from '../../config/bcrypt.adapter'
 import { UserMapper } from '../mappers/user.mapper'
 import { AdminDatasource } from '../../domain/datasources/admin.datasource'
@@ -100,5 +100,23 @@ export class AdminMongoDatasourceImpl implements AdminDatasource {
       }
       throw CustomError.internalServer()
     }
+  }
+
+  async update(updateUserDto: UpdateUserDto): Promise<PublicUserEntity> {
+    const { id, name, email, password, roles, img } = updateUserDto
+    const updateFields: { [key: string]: any } = { name, email, roles, img }
+
+    if (password) {
+      updateFields.password = this.hashPassword(password)
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(id, { $set: updateFields }, { new: true }).exec()
+    const user = await UserModel.findById(id).exec()
+
+    if (!updatedUser) {
+      throw CustomError.notFound('User not found')
+    }
+
+    return PublicUserMapper.userEntityFromObject(user)
   }
 }

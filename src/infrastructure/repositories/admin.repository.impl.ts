@@ -1,11 +1,5 @@
-import {
-  AdminRepository,
-  UserEntity,
-  AdminDatasource,
-  CreateUserDto,
-} from '../../domain'
-import { DeleteUserDto } from '../../domain/dtos/admin/delete-user.dto'
-import { FindByUserDto } from '../../domain/dtos/admin/findBy-user.dto'
+import { AdminRepository, UserEntity, AdminDatasource, CreateUserDto } from '../../domain'
+import { FindByUserDto, UpdateUserDto, DeleteUserDto } from '../../domain/dtos'
 import { PublicUserEntity } from '../../domain/entities/public-user.entity'
 
 export class AdminRepositoryImpl implements AdminRepository {
@@ -25,5 +19,9 @@ export class AdminRepositoryImpl implements AdminRepository {
 
   async delete(deleteUserDto: DeleteUserDto): Promise<boolean> {
     return await this.adminDatasource.delete(deleteUserDto)
+  }
+
+  async update(updateUserDto: UpdateUserDto): Promise<PublicUserEntity> {
+    return await this.adminDatasource.update(updateUserDto)
   }
 }
