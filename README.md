@@ -2,7 +2,7 @@
 
 ## Description
 
-User system and JWT Authentication with clean architecture
+Users system and JWT Authentication build on clean architecture
 
 ## Stack / Framework used
 
@@ -11,19 +11,18 @@ Built with:
 - [Typescript](https://www.typescriptlang.org/)
 - [Node.js](https://nodejs.org/en/)
 - [Express.js](https://expressjs.com/)
-<!-- - [Prisma](https://www.prisma.io/) -->
 - [Mongo](https://mongodb.com/)
 - [JWT](https://jwt.io/)
 - [Bcrypt](https://www.npmjs.com/package/bcrypt)
 - [Docker](https://www.docker.com/)
 
-## Configs
+## Config
 
 Configurations, Adapters & Third party packages
 
 ## Data
 
-References from databases
+References, Models from databases
 
 ## Domain
 
@@ -56,45 +55,53 @@ Frameworks & Drivers
     │   │   │── mappers
     │   │   └── repositories
     │   ├── presentation/
+    │   │   │── admin
     │   │   │── auth
     │   │   │── middlewares
     │   │   └── server.ts
     │   └── app.ts
-    ├── http.http
     ├── docker-compose.yml
     ├── package.json
     └── tsconfig.json
 
-## Implementations
+## Token Implementations
 
-- [x] Implement JWT Token
-- [ ] Implement Refresh Token
-<!-- - [ ] Implement Prisma ORM -->
+- [x] Implement JWT Generate Token
+- [x] Implement JWT Validate Token
+- [ ] Implement JWT Refresh
+
+## Others
+
 - [ ] Implement Testing
 - [ ] Implement Swagger
 - [ ] Implement Docker
 - [ ] Implement CI/CD
 
-## Todo Authentication
+## Authentication
 
 - [x] Register
 - [x] Login
 - [ ] Logout
-- [ ] Profile
+- [x] Profile
 - [ ] EditProfile
 - [ ] Reset Password
 
-## Todo Users
+## Admin Users
 
-- [ ] Create User
-- [ ] Read User
-- [ ] Update User
-- [ ] Delete User
+- [x] Create User
+- [x] Find User
+- [x] Find All User
+- [x] Update User
+- [x] Delete User
 
 ## License
 
-## Instalation
+## Installation
 
 Run docker
 
-    docker compose up -d
+    docker compose up -
+
+Run development environment
+
+    pnpm run dev
