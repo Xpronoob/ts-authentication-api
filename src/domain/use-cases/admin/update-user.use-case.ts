@@ -19,7 +19,6 @@ export class UpdateUserImp implements UpdateUserUseCase {
   constructor(private readonly adminRepository: AdminRepository) {}
 
   async execute(updateUserDto: UpdateUserDto): Promise<NewUser> {
-    // Update user with repository
     const user = await this.adminRepository.update(updateUserDto)
     const { name, email, roles } = user
 

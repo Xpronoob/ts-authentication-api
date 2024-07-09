@@ -10,12 +10,7 @@ export class DeleteUserImp implements DeleteUserUseCase {
   constructor(private readonly adminRepository: AdminRepository) {}
 
   async execute(deleteUserDto: DeleteUserDto): Promise<boolean> {
-    try {
-      const deleteResponse = await this.adminRepository.delete(deleteUserDto)
-      return deleteResponse
-    } catch (error) {
-      console.error('Error deleting user:', error)
-      throw new Error('Internal server error')
-    }
+    const deleteResponse = await this.adminRepository.delete(deleteUserDto)
+    return deleteResponse
   }
 }

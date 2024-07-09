@@ -1,19 +1,19 @@
-import { UserModel } from '../../data/mongodb'
-import { AuthDatasource, CustomError, RegisterUserDto, UserEntity } from '../../domain'
-import { BcryptAdapter } from '../../config/bcrypt.adapter'
 import { UserMapper } from '../mappers/user.mapper'
-import { LoginUserDto } from '../../domain/dtos/auth/login-user.dto'
+import { AuthDatasource, CustomError, UserEntity } from '../../domain'
+import { LoginUserDto, RegisterUserDto } from '../../domain/dtos'
+import { BcryptAdapter } from '../../config/bcrypt.adapter'
+import { UserModel } from '../../data/mongodb'
 
 type HashFunction = (password: string) => string
 type CompareFunction = (password: string, hashed: string) => boolean
 
 export class AuthMongoDatasourceImpl implements AuthDatasource {
-  constructor (
+  constructor(
     private readonly hashPassword: HashFunction = BcryptAdapter.hash,
-    private readonly comparePassword: CompareFunction = BcryptAdapter.compare
+    private readonly comparePassword: CompareFunction = BcryptAdapter.compare,
   ) {}
 
-  async register (registerUserDto: RegisterUserDto): Promise<UserEntity> {
+  async register(registerUserDto: RegisterUserDto): Promise<UserEntity> {
     const { name, email, password } = registerUserDto
 
     try {
@@ -25,7 +25,7 @@ export class AuthMongoDatasourceImpl implements AuthDatasource {
       const user = await UserModel.create({
         name,
         email,
-        password: this.hashPassword(password)
+        password: this.hashPassword(password),
       })
 
       await user.save()
@@ -41,7 +41,7 @@ export class AuthMongoDatasourceImpl implements AuthDatasource {
     }
   }
 
-  async login (loginUserDto: LoginUserDto): Promise<UserEntity> {
+  async login(loginUserDto: LoginUserDto): Promise<UserEntity> {
     const { email, password } = loginUserDto
 
     try {

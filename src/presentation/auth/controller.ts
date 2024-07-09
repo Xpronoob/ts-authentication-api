@@ -1,8 +1,7 @@
 import { Request, Response } from 'express'
-import { AuthRepository, CustomError, RegisterUserDto, RegisterUserImp } from '../../domain'
-import { LoginUserDto } from '../../domain/dtos/auth/login-user.dto'
-import { LoginUserImp } from '../../domain/use-cases/auth/login-user.use-case'
-import { ProfileUserDto } from '../../domain/dtos/auth/profile-user.dto'
+import { AuthRepository, CustomError } from '../../domain'
+import { RegisterUserDto, LoginUserDto, ProfileUserDto } from '../../domain/dtos'
+import { RegisterUserImp, LoginUserImp } from '../../domain/use-cases'
 
 export class AuthController {
   // DI

@@ -11,7 +11,6 @@ export class FindByUserImp implements FindByUserUseCase {
   constructor(private readonly adminRepository: AdminRepository) {}
 
   async execute(findByUserDto: FindByUserDto): Promise<PublicUserEntity[]> {
-    // Find user with repository
     const users = await this.adminRepository.findBy(findByUserDto)
 
     return users

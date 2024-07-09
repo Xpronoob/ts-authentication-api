@@ -20,7 +20,6 @@ export class CreateUserImp implements CreateUserUseCase {
   constructor(private readonly adminRepository: AdminRepository) {}
 
   async execute(createUserDto: CreateUserDto): Promise<NewUser> {
-    // Create user with repository
     const user = await this.adminRepository.create(createUserDto)
     const { name, email, roles } = user
 

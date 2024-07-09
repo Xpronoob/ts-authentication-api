@@ -1,12 +1,8 @@
+import { UserMapper, PublicUserMapper } from '../mappers'
+import { CustomError, UserEntity, PublicUserEntity, AdminDatasource } from '../../domain'
+import { CreateUserDto, FindByUserDto, UpdateUserDto, DeleteUserDto } from '../../domain/dtos'
 import { UserModel } from '../../data/mongodb'
-import { CustomError, CreateUserDto, UserEntity, UpdateUserDto } from '../../domain'
 import { BcryptAdapter } from '../../config/bcrypt.adapter'
-import { UserMapper } from '../mappers/user.mapper'
-import { AdminDatasource } from '../../domain/datasources/admin.datasource'
-import { FindByUserDto } from '../../domain/dtos/admin/findBy-user.dto'
-import { PublicUserMapper } from '../mappers/public-user.mapper'
-import { PublicUserEntity } from '../../domain/entities/public-user.entity'
-import { DeleteUserDto } from '../../domain/dtos/admin/delete-user.dto'
 
 type HashFunction = (password: string) => string
 type CompareFunction = (password: string, hashed: string) => boolean
@@ -45,12 +41,11 @@ export class AdminMongoDatasourceImpl implements AdminDatasource {
 
   async findBy(findByUserDto: FindByUserDto): Promise<PublicUserEntity[]> {
     // 1. Search criteria
-    const { name, email, roles } = findByUserDto
+    const { name, email } = findByUserDto
 
     const searchCriteria: any = {}
     if (name) searchCriteria.name = new RegExp(name, 'i')
     if (email) searchCriteria.email = new RegExp(email, 'i')
-    if (roles) searchCriteria.roles = { $all: roles }
 
     try {
       // 2. Find users
@@ -94,7 +89,6 @@ export class AdminMongoDatasourceImpl implements AdminDatasource {
 
       return true
     } catch (error) {
-      console.error('Error deleting user:', error)
       if (error instanceof CustomError) {
         throw error
       }
@@ -110,13 +104,20 @@ export class AdminMongoDatasourceImpl implements AdminDatasource {
       updateFields.password = this.hashPassword(password)
     }
 
-    const updatedUser = await UserModel.findByIdAndUpdate(id, { $set: updateFields }, { new: true }).exec()
-    const user = await UserModel.findById(id).exec()
+    try {
+      const updatedUser = await UserModel.findByIdAndUpdate(id, { $set: updateFields }, { new: true }).exec()
+      const user = await UserModel.findById(id).exec()
 
-    if (!updatedUser) {
-      throw CustomError.notFound('User not found')
+      if (!updatedUser) {
+        throw CustomError.notFound('User not found')
+      }
+
+      return PublicUserMapper.userEntityFromObject(user)
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
     }
-
-    return PublicUserMapper.userEntityFromObject(user)
   }
 }

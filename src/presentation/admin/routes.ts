@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import { AdminController } from './controller'
-import { AdminMiddleware } from '../middlewares/admin.middleware'
-import { AuthMiddleware } from '../middlewares/auth.middleware'
+import { AdminMiddleware, AuthMiddleware } from '../middlewares'
 
 import { AdminMongoDatasourceImpl } from '../../infrastructure/datasources/adminMongo.datasource.impl'
 import { AdminRepositoryImpl } from '../../infrastructure/repositories/admin.repository.impl'

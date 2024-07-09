@@ -1,6 +1,6 @@
-import { AdminRepository, UserEntity, AdminDatasource, CreateUserDto } from '../../domain'
-import { FindByUserDto, UpdateUserDto, DeleteUserDto } from '../../domain/dtos'
-import { PublicUserEntity } from '../../domain/entities/public-user.entity'
+import { AdminRepository, AdminDatasource } from '../../domain'
+import { PublicUserEntity, UserEntity } from '../../domain/entities'
+import { FindByUserDto, UpdateUserDto, DeleteUserDto, CreateUserDto } from '../../domain/dtos'
 
 export class AdminRepositoryImpl implements AdminRepository {
   constructor(private readonly adminDatasource: AdminDatasource) {}
