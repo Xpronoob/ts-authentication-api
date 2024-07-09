@@ -1,19 +1,23 @@
 import { UserModel } from '../../data/mongodb'
-import { CustomError, CreateUserDto, UserEntity } from '../../domain'
+import { CustomError, CreateUserDto, UserEntity, UpdateUserDto } from '../../domain'
 import { BcryptAdapter } from '../../config/bcrypt.adapter'
 import { UserMapper } from '../mappers/user.mapper'
 import { AdminDatasource } from '../../domain/datasources/admin.datasource'
+import { FindByUserDto } from '../../domain/dtos/admin/findBy-user.dto'
+import { PublicUserMapper } from '../mappers/public-user.mapper'
+import { PublicUserEntity } from '../../domain/entities/public-user.entity'
+import { DeleteUserDto } from '../../domain/dtos/admin/delete-user.dto'
 
 type HashFunction = (password: string) => string
 type CompareFunction = (password: string, hashed: string) => boolean
 
 export class AdminMongoDatasourceImpl implements AdminDatasource {
-  constructor (
+  constructor(
     private readonly hashPassword: HashFunction = BcryptAdapter.hash,
-    private readonly comparePassword: CompareFunction = BcryptAdapter.compare
+    private readonly comparePassword: CompareFunction = BcryptAdapter.compare,
   ) {}
 
-  async create (createUserDto: CreateUserDto): Promise<UserEntity> {
+  async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     // 1. Validate request
     const { name, email, password, roles, img } = createUserDto
 
@@ -24,7 +28,7 @@ export class AdminMongoDatasourceImpl implements AdminDatasource {
         email,
         password: this.hashPassword(password),
         img,
-        roles
+        roles,
       })
 
       await user.save()
@@ -37,5 +41,82 @@ export class AdminMongoDatasourceImpl implements AdminDatasource {
       }
       throw CustomError.internalServer()
     }
+  }
+
+  async findBy(findByUserDto: FindByUserDto): Promise<PublicUserEntity[]> {
+    // 1. Search criteria
+    const { name, email, roles } = findByUserDto
+
+    const searchCriteria: any = {}
+    if (name) searchCriteria.name = new RegExp(name, 'i')
+    if (email) searchCriteria.email = new RegExp(email, 'i')
+    if (roles) searchCriteria.roles = { $all: roles }
+
+    try {
+      // 2. Find users
+      const userFinded = await UserModel.find(searchCriteria).exec()
+      // console.log(userFinded) // [{}]
+
+      // 3. Map response
+      return PublicUserMapper.userEntityArrayFromObjectArray(userFinded)
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
+  async findAll(): Promise<PublicUserEntity[]> {
+    try {
+      const users = await UserModel.find().exec()
+      return PublicUserMapper.userEntityArrayFromObjectArray(users)
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
+  async delete(deleteUserDto: DeleteUserDto): Promise<boolean> {
+    try {
+      const { id, email } = deleteUserDto
+      const query: { [key: string]: any } = {}
+      if (id) query._id = id
+      if (email) query.email = email
+
+      const deleteResponse = await UserModel.deleteOne(query).exec()
+
+      if (deleteResponse.deletedCount === 0) {
+        return false
+      }
+
+      return true
+    } catch (error) {
+      console.error('Error deleting user:', error)
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
+  async update(updateUserDto: UpdateUserDto): Promise<PublicUserEntity> {
+    const { id, name, email, password, roles, img } = updateUserDto
+    const updateFields: { [key: string]: any } = { name, email, roles, img }
+
+    if (password) {
+      updateFields.password = this.hashPassword(password)
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(id, { $set: updateFields }, { new: true }).exec()
+    const user = await UserModel.findById(id).exec()
+
+    if (!updatedUser) {
+      throw CustomError.notFound('User not found')
+    }
+
+    return PublicUserMapper.userEntityFromObject(user)
   }
 }
