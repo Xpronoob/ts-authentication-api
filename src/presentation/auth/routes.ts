@@ -14,6 +14,7 @@ export class AuthRoutes {
 
     router.post('/login', controller.loginUser)
     router.post('/register', controller.registerUser)
+    router.post('/logout', AuthMiddleware.validateJWT, controller.logoutUser)
 
     router.get('/me', [AuthMiddleware.validateJWT], controller.getProfile)
 

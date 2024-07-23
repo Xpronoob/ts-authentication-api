@@ -36,6 +36,11 @@ export class AuthController {
       .catch(error => this.handleError(error, res))
   }
 
+  logoutUser = (req: Request, res: Response) => {
+    res.clearCookie('token', { path: '/' })
+    res.status(200).send({ message: 'Logged out' })
+  }
+
   getProfile = (req: Request, res: Response) => {
     const [error, profileUserDto] = ProfileUserDto.create(req.body.user)
     if (error) return res.status(400).json({ error })
