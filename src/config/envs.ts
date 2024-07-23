@@ -14,6 +14,11 @@ export const getPort = (): number => {
   return num
 }
 
+export const getFrontendUrl = (): string => {
+  const frontUrl = process.env.FRONTEND_URL
+  return frontUrl || 'http://localhost:5173'
+}
+
 interface DBConnection {
   url: string
   dbName: string
@@ -23,13 +28,13 @@ export class MongoConnection implements DBConnection {
   url: string
   dbName: string
 
-  constructor () {
+  constructor() {
     this.url = process.env.MONGO_URL || ''
     this.dbName = process.env.MONGO_DB_NAME || ''
     this.validateConnectionInfo()
   }
 
-  private validateConnectionInfo (): void {
+  private validateConnectionInfo(): void {
     if (!this.url) {
       throw new Error('MONGO_URL is not defined in the environment variables')
     }
@@ -39,7 +44,7 @@ export class MongoConnection implements DBConnection {
     }
   }
 
-  getMongoInfo (): { url: string, dbName: string } {
+  getMongoInfo(): { url: string; dbName: string } {
     this.validateConnectionInfo()
     return { url: this.url, dbName: this.dbName }
   }
@@ -62,10 +67,12 @@ const dbInstance = new MongoConnection()
 const { url, dbName } = dbInstance.getMongoInfo()
 
 export const envs = {
+  FRONTEND_URL: getFrontendUrl(),
+
   PORT: getPort(),
   MONGO_URL: url,
   MONGO_DB_NAME: dbName,
 
   // todo: require or throw
-  JWT_SEED: process.env.JWT_SEED || ''
+  JWT_SEED: process.env.JWT_SEED || '',
 }
