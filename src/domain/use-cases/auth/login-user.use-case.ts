@@ -10,6 +10,7 @@ interface UserToken {
     id: string
     name: string
     email: string
+    roles: string[]
   }
 }
 
@@ -20,12 +21,12 @@ interface LoginUserUseCase {
 }
 
 export class LoginUserImp implements LoginUserUseCase {
-  constructor (
+  constructor(
     private readonly authRepository: AuthRepository,
-    private readonly signToken: SignToken = JwtAdapter.generateToken
+    private readonly signToken: SignToken = JwtAdapter.generateToken,
   ) {}
 
-  async execute (loginUserDto: LoginUserDto, res: Response): Promise<UserToken> {
+  async execute(loginUserDto: LoginUserDto, res: Response): Promise<UserToken> {
     // Login user with repository
     const user = await this.authRepository.login(loginUserDto)
 
@@ -36,16 +37,17 @@ export class LoginUserImp implements LoginUserUseCase {
     // Save token in cookie
     // httpOnly: true - not accesible from JavaScript
     // secure: true - only send over HTTPS
-    // sameSite: strict - only send over HTTPS
-    res.cookie('token', token, { httpOnly: true, secure: true })
+    // sameSite: strict - only send in request from same site
+    res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none' })
 
     return {
       token,
       user: {
         id: user.id,
         name: user.name,
-        email: user.email
-      }
+        email: user.email,
+        roles: user.roles,
+      },
     }
   }
 }
