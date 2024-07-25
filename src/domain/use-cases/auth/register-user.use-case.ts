@@ -10,6 +10,7 @@ interface UserToken {
     id: string
     name: string
     email: string
+    role: string[]
   }
 }
 
@@ -20,12 +21,12 @@ interface RegisterUserUseCase {
 }
 
 export class RegisterUserImp implements RegisterUserUseCase {
-  constructor (
+  constructor(
     private readonly authRepository: AuthRepository,
-    private readonly signToken: SignToken = JwtAdapter.generateToken
+    private readonly signToken: SignToken = JwtAdapter.generateToken,
   ) {}
 
-  async execute (registeUserDto: RegisterUserDto, res: Response): Promise<UserToken> {
+  async execute(registeUserDto: RegisterUserDto, res: Response): Promise<UserToken> {
     // Register user with repository
     const user = await this.authRepository.register(registeUserDto)
 
@@ -43,8 +44,9 @@ export class RegisterUserImp implements RegisterUserUseCase {
       user: {
         id: user.id,
         name: user.name,
-        email: user.email
-      }
+        email: user.email,
+        role: user.roles,
+      },
     }
   }
 }
