@@ -74,5 +74,6 @@ export const envs = {
   MONGO_DB_NAME: dbName,
 
   // todo: require or throw
-  JWT_SEED: process.env.JWT_SEED || '',
+  JWT_ACCESS_TOKEN: process.env.JWT_ACCESS_TOKEN || '',
+  JWT_REFRESH_TOKEN: process.env.JWT_REFRESH_TOKEN || '',
 }
