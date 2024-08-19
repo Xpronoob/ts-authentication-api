@@ -37,7 +37,8 @@ export class AuthController {
   }
 
   logoutUser = (req: Request, res: Response) => {
-    res.clearCookie('token', { path: '/' })
+    res.clearCookie('accessToken', { path: '/' })
+    res.clearCookie('refreshToken', { path: '/' })
     res.status(200).send({ message: 'Logged out' })
   }
 
