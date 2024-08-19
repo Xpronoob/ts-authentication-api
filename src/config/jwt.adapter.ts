@@ -7,7 +7,7 @@ const JWT_REFRESH_TOKEN = envs.JWT_REFRESH_TOKEN
 export class JwtAdapter {
   // todo: seed generation
 
-  static async generateAccessToken(payload: Object, duration: string = '2h'): Promise<string | null> {
+  static async generateAccessToken(payload: Object, duration: string = '15m'): Promise<string | null> {
     return await new Promise(resolve => {
       jwt.sign(payload, JWT_ACCESS_TOKEN, { expiresIn: duration }, (err, token) => {
         if (err != null) return resolve(null)
@@ -17,7 +17,7 @@ export class JwtAdapter {
     })
   }
 
-  static async generateRefreshToken(payload: Object, duration: string = '2h'): Promise<string | null> {
+  static async generateRefreshToken(payload: Object, duration: string = '90d'): Promise<string | null> {
     return await new Promise(resolve => {
       jwt.sign(payload, JWT_REFRESH_TOKEN, { expiresIn: duration }, (err, token) => {
         if (err != null) return resolve(null)

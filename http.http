@@ -21,6 +21,6 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3030/api/auth/
+GET http://localhost:3030/api/auth/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NzhmNjA4MTQ5ZTliYTc2YWZmZjZmNSIsImlhdCI6MTcxOTIwMzM0OSwiZXhwIjoxNzE5MjEwNTQ5fQ.oowbQL_5N-Req6PZJJ2W9duGfkOX3kOoYl35RKkkdBY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGNjYTc4NDA5MmRhYWZlODFiNGJhNyIsImlhdCI6MTcyMTcwMzE1OSwiZXhwIjoxNzIxNzEwMzU5fQ.8PJTnEjFpM8KN-iFBYCbXOx-0wGotZ6xBLmbY-fxcMc
