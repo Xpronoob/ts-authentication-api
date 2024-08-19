@@ -68,7 +68,7 @@ Frameworks & Drivers
 
 - [x] Implement JWT Generate Token
 - [x] Implement JWT Validate Token
-- [ ] Implement JWT Refresh
+- [x] Implement JWT Refresh Token
 
 ## Others
 
@@ -81,7 +81,7 @@ Frameworks & Drivers
 
 - [x] Register
 - [x] Login
-- [ ] Logout
+- [x] Logout
 - [x] Profile
 - [ ] EditProfile
 - [ ] Reset Password
