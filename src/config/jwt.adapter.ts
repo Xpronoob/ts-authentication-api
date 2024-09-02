@@ -5,11 +5,9 @@ const JWT_ACCESS_TOKEN = envs.JWT_ACCESS_TOKEN
 const JWT_REFRESH_TOKEN = envs.JWT_REFRESH_TOKEN
 
 export class JwtAdapter {
-  // todo: seed generation
-
-  static async generateAccessToken(payload: Object, duration: string = '15m'): Promise<string | null> {
+  static async generateAccessToken(payload: Object, duration: string = '1m'): Promise<string | null> {
     return await new Promise(resolve => {
-      jwt.sign(payload, JWT_ACCESS_TOKEN, { expiresIn: duration }, (err, token) => {
+      jwt.sign(payload, JWT_ACCESS_TOKEN, { expiresIn: 60 }, (err, token) => {
         if (err != null) return resolve(null)
 
         resolve(token!) // '!' is non-null assertion \ not null, not undefined
@@ -30,7 +28,9 @@ export class JwtAdapter {
   static async validateAccessToken<T>(token: string): Promise<T | null> {
     return await new Promise(resolve => {
       jwt.verify(token, JWT_ACCESS_TOKEN, (err, decoded) => {
-        if (err != null) return resolve(null)
+        if (err?.message === 'jwt expired') return resolve({ expired: true } as T)
+        if (err?.name === 'JsonWebTokenError') return resolve(null)
+
         resolve(decoded as T)
       })
     })
@@ -39,9 +39,20 @@ export class JwtAdapter {
   static async validateRefreshToken<T>(token: string): Promise<T | null> {
     return await new Promise(resolve => {
       jwt.verify(token, JWT_REFRESH_TOKEN, (err, decoded) => {
-        if (err != null) return resolve(null)
+        if (err?.message === 'jwt expired') return resolve({ expired: true } as T)
+        if (err?.name === 'JsonWebTokenError') return resolve(null)
+
         resolve(decoded as T)
       })
     })
   }
+
+  // static async validateAccessToken<T>(token: string): Promise<T | null> {
+  //   return await new Promise(resolve => {
+  //     jwt.verify(token, JWT_ACCESS_TOKEN, (err, decoded) => {
+  //       if (err != null) return resolve(null)
+  //       resolve(decoded as T)
+  //     })
+  //   })
+  // }
 }
