@@ -2,11 +2,11 @@ import { PublicUserEntity } from '../../domain/entities/public-user.entity'
 
 export class PublicUserMapper {
   static userEntityFromObject(object: any): PublicUserEntity {
-    const { name, email, img, roles } = object
+    const { _id, id, name, email, img, roles } = object
 
     return new PublicUserEntity(
-      // _id || '',
-      // id || '',
+      _id || '',
+      id || '',
       name || '',
       email || '',
       // '', // password
