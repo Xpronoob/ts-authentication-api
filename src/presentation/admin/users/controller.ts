@@ -1,7 +1,13 @@
 import { Request, Response } from 'express'
-import { AdminRepository, CustomError } from '../../domain'
-import { CreateUserDto, FindByUserDto, UpdateUserDto, DeleteUserDto } from '../../domain/dtos'
-import { CreateUserImp, FindByUserImp, FindAllUserImp, UpdateUserImp, DeleteUserImp } from '../../domain/use-cases'
+import { AdminRepository, CustomError } from '../../../domain'
+import { CreateUserDto, FindByUserDto, UpdateUserDto, DeleteUserDto } from '../../../domain/dtos'
+import {
+  CreateUserImp,
+  FindByUserImp,
+  FindAllUserImp,
+  UpdateUserImp,
+  DeleteUserImp,
+} from '../../../domain/use-cases'
 
 export class AdminController {
   // DI

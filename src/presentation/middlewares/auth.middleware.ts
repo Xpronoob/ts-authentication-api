@@ -32,7 +32,7 @@ export class AuthMiddleware {
       if (payload?.id) {
         console.log('VERIFIED')
         const user = await UserModel.findById(payload.id)
-        if (!user) return res.status(401).json({ error: 'User not found' })
+        if (!user) return res.status(401).json({ error: 'Try login again' })
 
         req.body.user = user
         return next()
@@ -65,7 +65,7 @@ export class AuthMiddleware {
         res.cookie('accessToken', newAccessToken, { httpOnly: true, secure: true })
 
         const user = await UserModel.findById(payloadRefresh.id)
-        if (!user) return res.status(401).json({ error: 'User not found' })
+        if (!user) return res.status(401).json({ error: 'Try login again' })
 
         req.body.user = user
         return next()
