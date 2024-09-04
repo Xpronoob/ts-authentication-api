@@ -4,8 +4,8 @@ export class DeleteUserDto {
     public email?: string,
   ) {}
 
-  static create(object: { [key: string]: any }): [string?, DeleteUserDto?] {
-    const { id, email } = object
+  static create(id: string, object: { [key: string]: any }): [string?, DeleteUserDto?] {
+    const { email } = object
 
     if (!id && !email) return ['Missing user id or email']
 

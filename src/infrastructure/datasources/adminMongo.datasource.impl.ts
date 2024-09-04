@@ -39,21 +39,23 @@ export class AdminMongoDatasourceImpl implements AdminDatasource {
     }
   }
 
-  async findBy(findByUserDto: FindByUserDto): Promise<PublicUserEntity[]> {
+  async findBy(findByUserDto: FindByUserDto): Promise<PublicUserEntity> {
     // 1. Search criteria
-    const { name, email } = findByUserDto
+    const { id, name, email } = findByUserDto
 
     const searchCriteria: any = {}
+    if (id) searchCriteria.id = new RegExp(id, 'i')
     if (name) searchCriteria.name = new RegExp(name, 'i')
     if (email) searchCriteria.email = new RegExp(email, 'i')
 
     try {
       // 2. Find users
-      const userFinded = await UserModel.find(searchCriteria).exec()
-      // console.log(userFinded) // [{}]
+      // const userFinded = await UserModel.find(searchCriteria).exec()
+      const userFinded = await UserModel.findById(id).exec()
+      console.log(userFinded) // [{}]
 
       // 3. Map response
-      return PublicUserMapper.userEntityArrayFromObjectArray(userFinded)
+      return PublicUserMapper.userEntityFromObject(userFinded)
     } catch (error) {
       if (error instanceof CustomError) {
         throw error

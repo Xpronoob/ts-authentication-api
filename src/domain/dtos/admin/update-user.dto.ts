@@ -10,9 +10,9 @@ export class UpdateUserDto {
     public img?: string,
   ) {}
 
-  static create(object: { [key: string]: any }): [string?, UpdateUserDto?] {
-    const { id, name, email, password, roles, img } = object
-    const updateFields: { [key: string]: any } = { id, name, email, password, roles, img }
+  static create(id: string, object: { [key: string]: any }): [string?, UpdateUserDto?] {
+    const { name, email, password, roles, img } = object
+    const updateFields: { [key: string]: any } = { name, email, password, roles, img }
 
     if (!id) return ['Missing id']
     if (email) {
@@ -27,7 +27,7 @@ export class UpdateUserDto {
     return [
       undefined,
       new UpdateUserDto(
-        updateFields.id,
+        id,
         updateFields.name,
         updateFields.email,
         updateFields.password,

@@ -1,13 +1,17 @@
 export class FindByUserDto {
   private constructor(
-    public name: string,
-    public email: string,
+    public id: string,
+    public name?: string,
+    public email?: string,
+    public password?: string,
+    public roles?: string[],
+    public img?: string,
   ) {}
 
-  static create(object: { [key: string]: any }): [string?, FindByUserDto?] {
-    const { name, email } = object
-    if (!name && !email) return ['Missing search']
+  static create(criteria: { [key: string]: any }): [string?, FindByUserDto?] {
+    const { id, name, email } = criteria
+    if (!name && !email && !id) return ['Missing search']
 
-    return [undefined, new FindByUserDto(name, email)]
+    return [undefined, new FindByUserDto(id, name, email)]
   }
 }

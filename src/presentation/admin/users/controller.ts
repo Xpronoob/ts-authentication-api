@@ -33,7 +33,7 @@ export class AdminController {
   }
 
   findBy = (req: Request, res: Response) => {
-    const [error, findUserDto] = FindByUserDto.create(req.body)
+    const [error, findUserDto] = FindByUserDto.create(req.params)
     if (error) return res.status(400).json({ error })
 
     new FindByUserImp(this.adminRepository)
@@ -50,7 +50,7 @@ export class AdminController {
   }
 
   delete = (req: Request, res: Response) => {
-    const [error, deleteUserDto] = DeleteUserDto.create(req.body)
+    const [error, deleteUserDto] = DeleteUserDto.create(req.params.id, req.body)
     if (error) return res.status(400).json({ error })
 
     new DeleteUserImp(this.adminRepository)
@@ -68,7 +68,7 @@ export class AdminController {
   }
 
   update = (req: Request, res: Response) => {
-    const [error, updateUserDto] = UpdateUserDto.create(req.body)
+    const [error, updateUserDto] = UpdateUserDto.create(req.params.id, req.body)
     if (error) return res.status(400).json({ error })
 
     new UpdateUserImp(this.adminRepository)

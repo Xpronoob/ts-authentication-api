@@ -14,14 +14,14 @@ export class AdminUserRoutes {
 
     const controller = new AdminController(adminRepository)
 
-    router.post('/createUser', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.create)
+    router.post('/users', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.create)
     router.get('/users', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.findAll)
-    router.post('/findUsers', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.findBy)
+    router.get('/users/:id', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.findBy)
+    router.patch('/users/:id', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.update)
+    router.delete('/users/:id', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.delete)
+
     // router.get('/findUserByEmail/:email', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.findByEmail)
     // router.post('/findUserByName', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.findByName)
-    router.post('/updateUser', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.update)
-    router.delete('/users', [AuthMiddleware.validateJWT, AdminMiddleware.validateRoles], controller.delete)
-
     return router
   }
 }

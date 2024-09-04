@@ -9,7 +9,7 @@ export class AdminRepositoryImpl implements AdminRepository {
     return await this.adminDatasource.create(createUserDto)
   }
 
-  async findBy(findByUserDto: FindByUserDto): Promise<PublicUserEntity[]> {
+  async findBy(findByUserDto: FindByUserDto): Promise<PublicUserEntity> {
     return await this.adminDatasource.findBy(findByUserDto)
   }
 

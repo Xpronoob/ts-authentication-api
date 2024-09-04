@@ -12,7 +12,7 @@ export abstract class AdminDatasource {
   // abstract findById (id: string): Promise<UserEntity>
   // abstract findByEmail (email: string): Promise<UserEntity>
   // abstract findByName (name: string): Promise<UserEntity>
-  abstract findBy(findByUserDto: FindByUserDto): Promise<PublicUserEntity[]>
+  abstract findBy(findByUserDto: FindByUserDto): Promise<PublicUserEntity>
   abstract update(updateUserDto: UpdateUserDto): Promise<PublicUserEntity>
   abstract delete(deleteUserDto: DeleteUserDto): Promise<boolean>
 }
