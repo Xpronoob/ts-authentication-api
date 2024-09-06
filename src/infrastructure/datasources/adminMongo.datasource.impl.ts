@@ -52,7 +52,7 @@ export class AdminMongoDatasourceImpl implements AdminDatasource {
       // 2. Find users
       // const userFinded = await UserModel.find(searchCriteria).exec()
       const userFinded = await UserModel.findById(id).exec()
-      console.log(userFinded) // [{}]
+      // console.log(userFinded) // [{}]
 
       // 3. Map response
       return PublicUserMapper.userEntityFromObject(userFinded)
