@@ -22,15 +22,15 @@ export class AuthMiddleware {
 
     try {
       const payload = await JwtAdapter.validateAccessToken<{ id: string; expired: boolean }>(accessToken)
-      console.log('Payload Access: ', payload)
+      // console.log('Payload Access: ', payload)
 
       if (!payload) {
-        console.log('INVALID')
+        // console.log('INVALID')
         return res.status(401).json({ error: 'Invalid access token' })
       }
 
       if (payload?.id) {
-        console.log('VERIFIED')
+        // console.log('VERIFIED')
         const user = await UserModel.findById(payload.id)
         if (!user) return res.status(401).json({ error: 'Try login again' })
 
@@ -39,7 +39,7 @@ export class AuthMiddleware {
       }
 
       if (payload.expired === true) {
-        console.log('ACCESS EXPIRED')
+        // console.log('ACCESS EXPIRED')
 
         const storedRefreshToken = await RefreshTokenModel.findOne({ token: refreshToken })
         if (!storedRefreshToken) {
