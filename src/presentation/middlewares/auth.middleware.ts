@@ -25,21 +25,12 @@ export class AuthMiddleware {
       // console.log('Payload Access: ', payload)
 
       if (!payload) {
-        // console.log('INVALID')
+        console.log('TOKEN STATE: INVALID')
         return res.status(401).json({ error: 'Invalid access token' })
       }
 
-      if (payload?.id) {
-        // console.log('VERIFIED')
-        const user = await UserModel.findById(payload.id)
-        if (!user) return res.status(401).json({ error: 'Try login again' })
-
-        req.body.user = user
-        return next()
-      }
-
       if (payload.expired === true) {
-        // console.log('ACCESS EXPIRED')
+        console.log('TOKEN STATE: ACCESS EXPIRED')
 
         const storedRefreshToken = await RefreshTokenModel.findOne({ token: refreshToken })
         if (!storedRefreshToken) {
@@ -65,6 +56,15 @@ export class AuthMiddleware {
         res.cookie('accessToken', newAccessToken, { httpOnly: true, secure: true })
 
         const user = await UserModel.findById(payloadRefresh.id)
+        if (!user) return res.status(401).json({ error: 'Try login again' })
+
+        req.body.user = user
+        return next()
+      }
+
+      if (payload?.id) {
+        console.log('TOKEN STATE: VERIFIED')
+        const user = await UserModel.findById(payload.id)
         if (!user) return res.status(401).json({ error: 'Try login again' })
 
         req.body.user = user
