@@ -23,7 +23,7 @@ export class Server {
   async start(): Promise<void> {
     const corsOptions: cors.CorsOptions = {
       origin: [envs.FRONTEND_URL],
-      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
       credentials: true, // Allow sending cookies
       allowedHeaders: ['Content-Type', 'Authorization'],
     }
