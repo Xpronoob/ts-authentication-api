@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
   roles: {
     type: [String],
     default: ['USER_ROLE'],
-    enum: ['USER_ROLE', 'ADMIN_ROLE', 'ADMIN_USER', 'ADMIN_PRODUCT'],
+    enum: ['USER_ROLE', 'ADMIN_ROLE', 'ADMIN_USERS', 'ADMIN_PRODUCTS'],
   },
 })
 
