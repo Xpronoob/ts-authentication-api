@@ -2,7 +2,7 @@
   "name": "ts-authentication-api",
   "version": "1.0.0",
   "description": "User system and JWT Authentication",
-  "main": "app.js",
+  "main": "src/app.ts",
   "type": "module",
   "scripts": {
     "build": "rimraf ./build && tsc",
