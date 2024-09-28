@@ -129,6 +129,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# Extras
+.vscode/
 build/
 mongo/
 notes/

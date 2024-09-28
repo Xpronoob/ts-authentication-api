@@ -2,44 +2,18 @@
 
 ## Description
 
-Users system and JWT Authentication build on clean architecture
+Users with roles system and JWT Authentication build on clean architecture
 
 ## Stack / Framework used
 
 Built with:
 
-- [Typescript](https://www.typescriptlang.org/)
-- [Node.js](https://nodejs.org/en/)
-- [Express.js](https://expressjs.com/)
-- [Mongo](https://mongodb.com/)
-- [JWT](https://jwt.io/)
-- [Bcrypt](https://www.npmjs.com/package/bcrypt)
-- [Docker](https://www.docker.com/)
-
-## Config
-
-Configurations, Adapters & Third party packages
-
-## Data
-
-References, Models from databases
-
-## Domain
-
-Enterprise Business Rules
-
-## Infrastructure
-
-Application Business Rules
-
-## Presentation
-
-Frameworks & Drivers
+[Typescript](https://www.typescriptlang.org/) | [Node.js](https://nodejs.org/en/) | [Express.js](https://expressjs.com/) | [Mongo](https://mongodb.com/) | [JWT](https://jwt.io/) | [Bcrypt](https://www.npmjs.com/package/bcrypt) | [Docker](https://www.docker.com/) | [Jest](https://jestjs.io/)
 
 ## Folder structure
 
     ts-authentication-api/
-    ├── build/
+    ├── __test__/
     ├── src/
     │   ├── config/
     │   ├── data/
@@ -60,6 +34,7 @@ Frameworks & Drivers
     │   │   │── middlewares
     │   │   └── server.ts
     │   └── app.ts
+    ├── .env
     ├── docker-compose.yml
     ├── package.json
     └── tsconfig.json
@@ -70,21 +45,14 @@ Frameworks & Drivers
 - [x] Implement JWT Validate Token
 - [x] Implement JWT Refresh Token
 
-## Others
-
-- [ ] Implement Testing
-- [ ] Implement Swagger
-- [ ] Implement Docker
-- [ ] Implement CI/CD
-
 ## Authentication
 
 - [x] Register
 - [x] Login
 - [x] Logout
 - [x] Profile
-- [ ] EditProfile
-- [ ] Reset Password
+- [x] EditProfile
+- [x] Reset Password
 
 ## Admin Users
 
@@ -101,6 +69,26 @@ Frameworks & Drivers
 Run docker
 
     docker compose up -
+
+Configure environment variables .env file
+
+    # Configuration
+    FRONTEND_URL=
+    PORT=3030
+    DEBUG_MODE=
+
+    # Database
+    MONGO_URL=
+    MONGO_DB_NAME=
+
+    # JWT Private Key
+    JWT_ACCESS_TOKEN=
+    JWT_REFRESH_TOKEN=
+
+    # Cookies expiration time
+    # Time units: s, m, h, d
+    COOKIE_EXPIRES_ACCESS_TOKEN=5s
+    COOKIE_EXPIRES_REFRESH_TOKEN=120d
 
 Run development environment
 
