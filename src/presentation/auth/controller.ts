@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
-import { AuthRepository, CustomError } from '../../domain'
+import { CustomError } from '../../domain/errors'
+import { AuthRepository } from '../../domain/repositories'
 import { RegisterUserDto, LoginUserDto, ProfileUserDto } from '../../domain/dtos'
 import { RegisterUserImp, LoginUserImp } from '../../domain/use-cases'
 

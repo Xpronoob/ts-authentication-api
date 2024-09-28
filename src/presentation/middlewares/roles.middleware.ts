@@ -13,8 +13,6 @@ export class RolesMiddleware {
         return res.status(404).json({ message: 'User not found' })
       }
 
-      // console.log('User: ', user)
-
       const hasRole = requiredRoles.some(role => user.roles.includes(role))
       if (!hasRole) {
         return res.status(403).json({ message: 'Insufficient permissions' })

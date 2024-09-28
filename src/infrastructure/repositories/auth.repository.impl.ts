@@ -1,4 +1,5 @@
-import { AuthDatasource, AuthRepository } from '../../domain'
+import { AuthDatasource } from '../../domain/datasources'
+import { AuthRepository } from '../../domain/repositories'
 import { UserEntity } from '../../domain/entities'
 import { LoginUserDto, RegisterUserDto } from '../../domain/dtos'
 

@@ -1,5 +1,7 @@
 import { UserMapper } from '../mappers/user.mapper'
-import { AuthDatasource, CustomError, UserEntity } from '../../domain'
+import { CustomError } from '../../domain/errors'
+import { UserEntity } from '../../domain/entities'
+import { AuthDatasource } from '../../domain/datasources'
 import { LoginUserDto, RegisterUserDto } from '../../domain/dtos'
 import { BcryptAdapter } from '../../config/bcrypt.adapter'
 import { UserModel } from '../../data/mongodb'
