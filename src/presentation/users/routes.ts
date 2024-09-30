@@ -27,6 +27,11 @@ export class UserRoutes {
     router.get(
       '/users/:id',
       [AuthMiddleware.validateJWT, RolesMiddleware.validateRoles(['ADMIN_ROLE', 'ADMIN_USERS'])],
+      controller.findById,
+    )
+    router.post(
+      '/users/findBy',
+      [AuthMiddleware.validateJWT, RolesMiddleware.validateRoles(['ADMIN_ROLE', 'ADMIN_USERS'])],
       controller.findBy,
     )
     router.patch(

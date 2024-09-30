@@ -1,3 +1,5 @@
+import { addressUser } from "domain/entities"
+
 export class FindByUserDto {
   private constructor(
     public id: string,
@@ -6,6 +8,9 @@ export class FindByUserDto {
     public password?: string,
     public roles?: string[],
     public img?: string,
+    public lastname?: string,
+    public phone?: string,
+    public address?: addressUser,
   ) {}
 
   static create(criteria: { [key: string]: any }): [string?, FindByUserDto?] {

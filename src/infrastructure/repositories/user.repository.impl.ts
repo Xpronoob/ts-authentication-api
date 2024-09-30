@@ -14,6 +14,10 @@ export class UserRepositoryImpl implements UserRepository {
     return await this.userDatasource.findBy(findByUserDto)
   }
 
+  async findById(findByUserDto: FindByUserDto): Promise<UserEntity> {
+    return await this.userDatasource.findById(findByUserDto)
+  }
+
   async findAll(): Promise<UserEntity[]> {
     return await this.userDatasource.findAll()
   }

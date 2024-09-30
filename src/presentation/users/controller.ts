@@ -2,7 +2,8 @@ import { Request, Response } from 'express'
 import { UserRepository } from '../../domain/repositories'
 import { CustomError } from '../../domain/errors'
 import { CreateUserDto, FindByUserDto, UpdateUserDto, DeleteUserDto } from '../../domain/dtos'
-import { CreateUserImp, FindByUserImp, FindAllUserImp, UpdateUserImp, DeleteUserImp } from '../../domain/use-cases'
+import { CreateUserImp, FindByUserImp, FindAllUserImp, UpdateUserImp, DeleteUserImp, FindByIdUserImp } from '../../domain/use-cases'
+import {  } from 'domain/use-cases/user/findById-user.use-case'
 
 export class UserController {
   // DI
@@ -28,10 +29,20 @@ export class UserController {
   }
 
   findBy = (req: Request, res: Response) => {
-    const [error, findUserDto] = FindByUserDto.create(req.params)
+    const [error, findUserDto] = FindByUserDto.create(req.body)
     if (error) return res.status(400).json({ error })
 
     new FindByUserImp(this.userRepository)
+      .execute(findUserDto!)
+      .then(data => res.json(data))
+      .catch(error => this.handleError(error, res))
+  }
+
+  findById = (req: Request, res: Response) => {
+    const [error, findUserDto] = FindByUserDto.create(req.params)
+    if (error) return res.status(400).json({ error })
+
+    new FindByIdUserImp(this.userRepository)
       .execute(findUserDto!)
       .then(data => res.json(data))
       .catch(error => this.handleError(error, res))
