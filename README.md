@@ -50,15 +50,15 @@ Built with:
 - [x] Register
 - [x] Login
 - [x] Logout
-- [x] Profile
-- [x] EditProfile
-- [x] Reset Password
+- [ ] Profile
+- [ ] EditProfile
+- [ ] Reset Password
 
 ## Admin Users
 
 - [x] Create User
-- [x] Find User
-- [x] Find All User
+- [x] Find All Users
+- [x] Find User by Id
 - [x] Update User
 - [x] Delete User
 
