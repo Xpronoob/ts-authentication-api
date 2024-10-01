@@ -122,12 +122,13 @@ export class UserMongoDatasourceImpl implements UserDatasource {
   }
 
   async update(updateUserDto: UpdateUserDto): Promise<UserEntity> {
-    const { id, name, email, password, roles, img } = updateUserDto
-    const updateFields: { [key: string]: any } = { name, email, roles, img }
+    const { id, name, email, roles, img, lastname, phone, address } = updateUserDto
+    const updateFields: { [key: string]: any } = { name, email, roles, img, lastname, phone, address }
+    console.log('updateFields', updateFields)
 
-    if (password) {
-      updateFields.password = this.hashPassword(password)
-    }
+    // if (password) {
+    //   updateFields.password = this.hashPassword(password)
+    // }
 
     try {
       const updatedUser = await UserModel.findByIdAndUpdate(id, { $set: updateFields }, { new: true }).exec()
