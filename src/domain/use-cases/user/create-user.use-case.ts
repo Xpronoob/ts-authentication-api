@@ -1,15 +1,8 @@
+import { addressUser } from 'domain/entities'
 import { CreateUserDto } from '../../dtos/user/create-user.dto'
 import { UserRepository } from '../../repositories/users/user.repository'
 import { Response } from 'express'
 // import { UserEntity } from '../../entities'
-
-interface addressUser {
-  street?: string
-  city?: string
-  state?: string
-  zip?: string
-  country?: string
-}
 
 interface NewUser {
   user: {

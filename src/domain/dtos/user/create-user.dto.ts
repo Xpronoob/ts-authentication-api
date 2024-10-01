@@ -1,12 +1,5 @@
+import { addressUser } from 'domain/entities'
 import { Validators } from '../../../config'
-
-export interface UserAdress {
-  street?: string
-  city?: string
-  state?: string
-  zip?: string
-  country?: string
-}
 
 export class CreateUserDto {
   private constructor(
@@ -17,7 +10,7 @@ export class CreateUserDto {
     public img?: string,
     public lastname?: string,
     public phone?: string,
-    public address?: UserAdress,
+    public address?: addressUser,
   ) {}
 
   static create(object: { [key: string]: any }): [string?, CreateUserDto?] {
